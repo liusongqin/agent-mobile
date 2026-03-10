@@ -122,6 +122,18 @@ function handleKeydown(e) {
     sendMessage()
   }
 }
+
+function handleQuickUpload(e) {
+  const file = e.target.files[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      currentImage.value = ev.target.result
+    }
+    reader.readAsDataURL(file)
+    e.target.value = ''
+  }
+}
 </script>
 
 <template>
@@ -217,17 +229,7 @@ function handleKeydown(e) {
             type="file"
             accept="image/*"
             class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-            @change="(e) => {
-              const file = e.target.files[0]
-              if (file) {
-                const reader = new FileReader()
-                reader.onload = (ev) => {
-                  currentImage = ev.target.result
-                }
-                reader.readAsDataURL(file)
-                e.target.value = ''
-              }
-            }"
+            @change="handleQuickUpload"
           />
           <button class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
             📷
